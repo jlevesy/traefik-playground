@@ -47,3 +47,38 @@ spec:
           ports:
             - name: tcp
               containerPort: 8080
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  namespace: playground
+  name: whoamitcptls
+  labels:
+    app: whoamitcptls
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: whoamitcptls
+  template:
+    metadata:
+      labels:
+        app: whoamitcptls
+    spec:
+      containers:
+        - name: whoamitcptls
+          image: containous/whoamitcp
+          args:
+            - -certFile=/secrets/tls.crt
+            - -keyFile=/secrets/tls.key
+          ports:
+            - name: tcptls
+              containerPort: 8080
+          volumeMounts:
+            - name: certs
+              mountPath: "/secrets"
+              readOnly: true
+      volumes:
+        - name: certs
+          secret:
+            secretName: tls.docker.localhost

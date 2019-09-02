@@ -24,3 +24,16 @@ spec:
       port: 8080
   selector:
     app: whoamitcp
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: whoamitcptls
+  namespace: playground
+spec:
+  ports:
+    - protocol: TCP
+      name: tcp
+      port: 8080
+  selector:
+    app: whoamitcptls

@@ -18,10 +18,49 @@ spec:
         - name: whoami
           port: 80
 ---
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: IngressRouteTCP
+# metadata:
+#   name: match-all-tcp
+#   namespace: playground
+#   annotations:
+#     kubernetes.io/ingress.class: traefik-ninja
+#   labels:
+#     tier: frontend
+# spec:
+#   entryPoints:
+#     - tcp
+#   routes:
+#     - match: HostSNI(`*`)
+#       services:
+#         - name: whoamitcp
+#           port: 8080
+# ---
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: IngressRouteTCP
+# metadata:
+#   name: match-all-tcp-tls
+#   namespace: playground
+#   annotations:
+#     kubernetes.io/ingress.class: traefik-ninja
+#   labels:
+#     tier: frontend
+# spec:
+#   entryPoints:
+#     - tcp
+#   routes:
+#     - match: HostSNI(`whoamitcp.docker.localhost`)
+#     # - match: HostSNI(`*`)
+#       services:
+#         - name: whoamitcp
+#           port: 8080
+#   tls:
+#     secretName: tls.docker.localhost
+---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRouteTCP
 metadata:
-  name: path-ingress
+  name: match-all-tcp-tls-passthrough
   namespace: playground
   annotations:
     kubernetes.io/ingress.class: traefik-ninja
@@ -31,7 +70,9 @@ spec:
   entryPoints:
     - tcp
   routes:
-    - match: HostSNI(`*`)
+    - match: HostSNI(`tls.docker.localhost`)
       services:
-        - name: whoamitcp
+        - name: whoamitcptls
           port: 8080
+  tls:
+    passthrough: true
