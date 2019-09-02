@@ -1,0 +1,49 @@
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  namespace: playground
+  name: whoami
+  labels:
+    app: whoami
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: whoami
+  template:
+    metadata:
+      labels:
+        app: whoami
+    spec:
+      containers:
+        - name: whoami
+          image: containous/whoami:v1.0.1
+          ports:
+            - name: http
+              containerPort: 80
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  namespace: playground
+  name: whoamitcp
+  labels:
+    app: whoamitcp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: whoamitcp
+  template:
+    metadata:
+      labels:
+        app: whoamitcp
+    spec:
+      containers:
+        - name: whoamitcp
+          image: containous/whoamitcp
+          ports:
+            - name: tcp
+              containerPort: 8080
