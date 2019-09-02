@@ -14,6 +14,9 @@ spec:
       name: https
       port: 443
     - protocol: TCP
+      name: tcp
+      port: 8081
+    - protocol: TCP
       name: admin
       port: 8080
   selector:

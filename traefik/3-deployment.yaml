@@ -33,6 +33,7 @@ spec:
             - --accesslog
             - --entrypoints.http.Address=:80
             - --entrypoints.https.Address=:443
+            - --entrypoints.tcp.Address=:8081
             - --providers.kubernetescrd
             - --providers.kubernetescrd.namespaces=playground
             - --providers.kubernetescrd.ingressclass=traefik-ninja
@@ -42,5 +43,7 @@ spec:
               containerPort: 80
             - name: https
               containerPort: 443
+            - name: tcp
+              containerPort: 8081
             - name: admin
               containerPort: 8080

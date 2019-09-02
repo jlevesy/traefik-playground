@@ -18,7 +18,7 @@ spec:
         - name: whoami
           port: 80
 ---
-piVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRouteTCP
 metadata:
   name: path-ingress
@@ -34,4 +34,4 @@ spec:
     - match: HostSNI(`*`)
       services:
         - name: whoamitcp
-          port: 80
+          port: 8080
