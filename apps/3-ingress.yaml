@@ -4,6 +4,10 @@ kind: IngressRoute
 metadata:
   name: path
   namespace: playground
+  annotations:
+    kubernetes.io/ingress.class: traefik-ninja
+  labels:
+    tier: frontend
 spec:
   entryPoints:
     - http
