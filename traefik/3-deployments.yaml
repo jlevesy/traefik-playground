@@ -34,6 +34,7 @@ spec:
             - --entrypoints.http.Address=:80
             - --entrypoints.https.Address=:443
             - --providers.kubernetescrd
+            - --providers.kubernetescrd.namespaces="playground"
           ports:
             - name: http
               containerPort: 80
