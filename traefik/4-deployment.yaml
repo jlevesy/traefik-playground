@@ -28,16 +28,6 @@ spec:
       containers:
         - name: traefik
           image: traefik:v2.0
-          args:
-            - --api
-            - --accesslog
-            - --entrypoints.http.Address=:80
-            - --entrypoints.https.Address=:443
-            - --entrypoints.tcp.Address=:8081
-            - --providers.kubernetescrd
-            - --providers.kubernetescrd.namespaces=playground
-            - --providers.kubernetescrd.ingressclass=traefik-ninja
-            - --providers.kubernetescrd.labelselector=tier==frontend
           ports:
             - name: http
               containerPort: 80
@@ -47,3 +37,10 @@ spec:
               containerPort: 8081
             - name: admin
               containerPort: 8080
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/traefik
+      volumes:
+        - name: config-volume
+          configMap:
+            name: traefik-config
