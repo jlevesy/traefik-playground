@@ -9,3 +9,29 @@ metadata:
 spec:
   addPrefix:
     prefix: /foo
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: known-ips
+  namespace: playground
+  labels:
+    tier: frontend
+spec:
+  ipWhiteList:
+    sourceRange:
+      - 192.168.1.7
+      - 127.0.0.1/32
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: secured
+  namespace: playground
+  labels:
+    tier: frontend
+spec:
+  chain:
+    middlewares:
+      - playground/known-ips
+      - playground/add-foo

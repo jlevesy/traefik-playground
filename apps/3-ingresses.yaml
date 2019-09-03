@@ -18,7 +18,7 @@ spec:
         - name: whoami
           port: 80
       middlewares:
-        - name: add-foo
+        - name: secured
 ---
 # apiVersion: traefik.containo.us/v1alpha1
 # kind: IngressRouteTCP
