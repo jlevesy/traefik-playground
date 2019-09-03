@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: whoami
-          image: containous/whoami:v1.0.1
+          image: containous/whoami:v1.2.0
           ports:
             - name: http
               containerPort: 80

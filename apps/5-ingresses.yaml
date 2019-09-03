@@ -4,21 +4,20 @@ kind: IngressRoute
 metadata:
   name: path-ingress
   namespace: playground
-  annotations:
-    kubernetes.io/ingress.class: traefik-ninja
   labels:
     tier: frontend
 spec:
   entryPoints:
     - http
   routes:
-    - match: PathPrefix(`/whoami`)
+    - match: Host(`whoami.docker.localhost`)
       kind: Rule
       services:
         - name: whoami
           port: 80
       middlewares:
-        - name: secured
+        # - name: strip-whoami
+        - name: test-compress
 ---
 # apiVersion: traefik.containo.us/v1alpha1
 # kind: IngressRouteTCP
@@ -64,8 +63,6 @@ kind: IngressRouteTCP
 metadata:
   name: match-all-tcp-tls-passthrough
   namespace: playground
-  annotations:
-    kubernetes.io/ingress.class: traefik-ninja
   labels:
     tier: frontend
 spec:

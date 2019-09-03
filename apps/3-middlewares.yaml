@@ -4,8 +4,6 @@ kind: Middleware
 metadata:
   name: add-foo
   namespace: playground
-  labels:
-    tier: frontend
 spec:
   addPrefix:
     prefix: /foo
@@ -15,8 +13,6 @@ kind: Middleware
 metadata:
   name: known-ips
   namespace: playground
-  labels:
-    tier: frontend
 spec:
   ipWhiteList:
     sourceRange:
@@ -26,10 +22,35 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
+  name: latency-check
+  namespace: playground
+spec:
+  circuitBreaker:
+    expression: LatencyAtQuantileMS(50.0) > 100
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: test-compress
+  namespace: playground
+spec:
+  compress: {}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-whoami
+  namespace: playground
+spec:
+  stripPrefix:
+    prefixes:
+      - /whoami
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
   name: secured
   namespace: playground
-  labels:
-    tier: frontend
 spec:
   chain:
     middlewares:
