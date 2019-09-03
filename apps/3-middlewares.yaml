@@ -56,3 +56,15 @@ spec:
     middlewares:
       - playground/known-ips
       - playground/add-foo
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: test-errorpage
+  namespace: playground
+spec:
+  errors:
+    status:
+      - 500-599
+    query: /{status}
+    service: playground/path-ingress-d027988890c9025cffce
