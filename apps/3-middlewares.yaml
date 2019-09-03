@@ -68,3 +68,16 @@ spec:
       - 500-599
     query: /{status}
     service: playground/path-ingress-d027988890c9025cffce
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: test-forward-auth-without-tls
+  namespace: playground
+spec:
+  forwardAuth:
+    address: http://whoami.playground.svc.cluster.local/auth
+    trustForwardHeader: true
+    authResponseHeaders:
+      - X-Auth-User
+      - X-Secret

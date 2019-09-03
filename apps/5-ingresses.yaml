@@ -18,7 +18,8 @@ spec:
       middlewares:
         # - name: strip-whoami
         # - name: test-compress
-        - name: test-errorpage
+        # - name: test-errorpage
+        - name: test-forward-auth-without-tls
 ---
 # apiVersion: traefik.containo.us/v1alpha1
 # kind: IngressRouteTCP
