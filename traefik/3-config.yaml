@@ -9,6 +9,8 @@ data:
     [Global]
       checkNewVersion = true
       sendAnonymousUsage = true
+    [log]
+      level = "debug"
     [entryPoints]
       [entryPoints.http]
         address = ":80"
