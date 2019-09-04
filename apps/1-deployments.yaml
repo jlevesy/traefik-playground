@@ -23,7 +23,36 @@ spec:
           ports:
             - name: http
               containerPort: 80
+# ---
+# kind: Deployment
+# apiVersion: extensions/v1beta1
+# metadata:
+#   namespace: playground
+#   name: whoami-badport
+#   labels:
+#     app: whoami
+# spec:
+#   replicas: 2
+#   selector:
+#     matchLabels:
+#       app: whoami
+#       mode: badport
+#   template:
+#     metadata:
+#       labels:
+#         app: whoami
+#         mode: badport
+#     spec:
+#       containers:
+#         - name: whoami
+#           image: jlevesy/whoami:withauth
+#           ports:
+#             - name: http
+#               containerPort: 80
+#           args:
+#             - -port=81
 ---
+
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:

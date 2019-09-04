@@ -131,23 +131,82 @@ metadata:
 spec:
   passTLSClientCert:
     pem: true
-    # info:
-    #   notAfter: true
-    #   notBefore: true
-    #   sans: true
-    #   subject:
-    #     country: true
-    #     province: true
-    #     locality: true
-    #     organization: true
-    #     commonName: true
-    #     serialNumber: true
-    #     domainComponent: true
-    #   issuer:
-    #     country: true
-    #     province: true
-    #     locality: true
-    #     organization: true
-    #     commonName: true
-    #     serialNumber: true
-    #     domainComponent: true
+    info:
+      notAfter: true
+      notBefore: true
+      sans: true
+      subject:
+        country: true
+        province: true
+        locality: true
+        organization: true
+        commonName: true
+        serialNumber: true
+        domainComponent: true
+      issuer:
+        country: true
+        province: true
+        locality: true
+        organization: true
+        commonName: true
+        serialNumber: true
+        domainComponent: true
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: test-ratelimit
+  namespace: playground
+spec:
+  rateLimit:
+    average: 100
+    burst: 50
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: test-redirect-to-whoami
+  namespace: playground
+spec:
+  redirectRegex:
+    regex: ^http://whoami.docker\.localhost/foo(.*)
+    replacement: http://whoami.docker.localhost/bar${1}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: test-redirect-to-https
+  namespace: playground
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+    port: 44434
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: test-force-path-bar
+  namespace: playground
+spec:
+  replacePath:
+    path: /bar
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: test-replace-path-foo-bar
+  namespace: playground
+spec:
+  replacePathRegex:
+    regex: ^/foo/(.*)
+    replacement: /bar/$1
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: test-retry
+  namespace: playground
+spec:
+  retry:
+    attempts: 4
