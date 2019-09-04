@@ -40,7 +40,12 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /etc/traefik
+            - name: mtls-creds
+              mountPath: /secrets
       volumes:
         - name: config-volume
           configMap:
             name: traefik-config
+        - name: mtls-creds
+          secret:
+            secretName: mtls-creds

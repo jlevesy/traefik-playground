@@ -81,3 +81,21 @@ spec:
     authResponseHeaders:
       - X-Auth-User
       - X-Secret
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: test-forward-auth-mtls
+  namespace: playground
+spec:
+  forwardAuth:
+    address: https://whoamimtls.playground.svc.cluster.local/auth
+    trustForwardHeader: true
+    authResponseHeaders:
+      - X-Auth-User
+      - X-Secret
+    tls:
+      ca: /secrets/ca.cert
+      caOptional: false
+      cert: /secrets/client.cert
+      key: /secrets/client.key

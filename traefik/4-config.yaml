@@ -10,8 +10,8 @@ data:
       checkNewVersion = true
       sendAnonymousUsage = true
     [accessLog]
-    # [log]
-    #   level = "debug"
+    [log]
+      level = "debug"
     [entryPoints]
       [entryPoints.http]
         address = ":80"
