@@ -21,5 +21,19 @@ data:
         address = ":8081"
     [providers]
       [providers.kubernetesCRD]
+      [providers.file]
+        filename = "/etc/traefik/dynamic_conf.toml"
     [api]
       dashboard = true
+  dynamic_conf.toml: |
+    [tls.options]
+      [tls.options.mintls13]
+        minVersion = "VersionTLS13"
+
+    [http]
+      [http.middlewares]
+        [http.middlewares.testHeader.headers]
+          [http.middlewares.testHeader.headers.customRequestHeaders]
+          X-Script-Name = "test"
+          [http.middlewares.testHeader.headers.customResponseHeaders]
+          X-Custom-Response-Header = "value"
