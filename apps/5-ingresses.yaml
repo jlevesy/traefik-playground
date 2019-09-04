@@ -9,6 +9,7 @@ metadata:
 spec:
   entryPoints:
     - http
+    - https
   routes:
     - match: Host(`whoami.docker.localhost`)
       kind: Rule
@@ -20,7 +21,13 @@ spec:
         # - name: test-compress
         # - name: test-errorpage
         # - name: test-forward-auth-without-tls
-        - name: test-forward-auth-mtls
+        # - name: test-forward-auth-mtls
+        # - name: test-header
+        - name: test-passtlsclientcert
+  tls:
+    secretName: whoami.mtls.docker.localhost
+    options:
+      name: enable-mutual-tls
 ---
 # apiVersion: traefik.containo.us/v1alpha1
 # kind: IngressRouteTCP

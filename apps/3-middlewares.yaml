@@ -99,3 +99,55 @@ spec:
       caOptional: false
       cert: /secrets/client.cert
       key: /secrets/client.key
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: test-header
+  namespace: playground
+spec:
+  headers:
+    stsSeconds: 3500
+    forceSTSHeader: true
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: test-inflightreq
+  namespace: playground
+spec:
+  inFlightReq:
+    amount: 1
+    sourceCriterion:
+      ipStrategy:
+        excludedIPs:
+          - 127.0.0.1/32
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: test-passtlsclientcert
+  namespace: playground
+spec:
+  passTLSClientCert:
+    pem: true
+    # info:
+    #   notAfter: true
+    #   notBefore: true
+    #   sans: true
+    #   subject:
+    #     country: true
+    #     province: true
+    #     locality: true
+    #     organization: true
+    #     commonName: true
+    #     serialNumber: true
+    #     domainComponent: true
+    #   issuer:
+    #     country: true
+    #     province: true
+    #     locality: true
+    #     organization: true
+    #     commonName: true
+    #     serialNumber: true
+    #     domainComponent: true
